@@ -22,12 +22,7 @@ angular.module('expenseManager').controller('IncomeController', function($scope,
 		nm.incomes.splice(index, 1);
 		getRecordCount();
 	};
-    
-	function clearRecordPanel() {
-		nm.idate = '';
-		nm.list_income = '';
-		nm.amount = '';
-	};
+
      nm.list_incomes = {
         data: [{
             id: 'ID1',
@@ -49,7 +44,7 @@ angular.module('expenseManager').controller('IncomeController', function($scope,
 		//clearRecordPaneli();
     });  
     
-    nm.submitIncome = function(isValid){
+    /*nm.submitIncome = function(isValid){
         if (nm.idate === '' || nm.list_income === '' || nm.amount === '') return false;
 
 		nm.incomes.push({'idate':nm.idate, 'list_income': nm.list_income, 'amount':nm.amount});
@@ -77,7 +72,61 @@ angular.module('expenseManager').controller('IncomeController', function($scope,
         nm.idate='';
 		nm.list_income='';
 		nm.amount='';
+	};*/
+    
+        nm.new_income = {};
+     function clearRecordPanel() {
+		nm.new_income.id = '';
+		nm.new_income.idate = '';
+		nm.new_income.list_income = '';
+        nm.new_income.amount = '';
+		nm.new_income.mode = '';
 	};
+        nm.saveIncome = function(){	
+             if (nm.new_income.id === '' || nm.new_income.idate === '' || nm.new_income.list_income === '' || nm.new_income.amount === '' || nm.new_income.mode === '') return false;
+            nm.incomes.push({'id':nm.new_income.id,'idate':nm.new_income.idate, 'list_income': nm.new_income.list_income, 'amount':nm.new_income.amount, 'mode':nm.new_income.mode });
+         clearRecordPanel();  
+};
+    $scope.DisplayUpdate = false;
+    $scope.DisplaySave = true;
+
+      nm.editIncome = function (iid) {
+        
+                for (var i in nm.incomes) {
+                    if (nm.incomes[i].id == iid) {
+                        nm.new_income.id=iid;
+                        nm.new_income.idate=nm.incomes[i].idate;
+                        nm.new_income.list_income=nm.incomes[i].list_income;
+                        nm.new_income.amount=nm.incomes[i].amount;
+                        nm.new_income.mode=nm.incomes[i].mode;
+                        
+                        
+                        $('.income-form').removeClass('hidden');
+
+                        //Hiding Save button
+                        $scope.DisplaySave = false;
+                        //Displaying Update button
+                        $scope.DisplayUpdate = true;
+                        //Clearing the Status
+                    }
+                }
+            };
+
+      nm.UpdateIncome = function(iid){	    
+            for (var i in nm.incomes) {
+                    if (nm.incomes[i].id == iid) {               
+                        nm.incomes[i].idate=nm.new_income.idate;
+                        nm.incomes[i].list_income=nm.new_income.list_income;
+                        nm.incomes[i].amount=nm.new_income.amount;
+                        nm.incomes[i].mode=nm.new_income.mode;
+                          }
+            }           
+                   clearRecordPanel();
+                    $scope.DisplaySave = true;
+                    $scope.DisplayUpdate = false;
+	   };
+    
+    
         nm.totalIncome = function(){
             var total = 0;
             for(var i=0;i<nm.incomes.length;i++){

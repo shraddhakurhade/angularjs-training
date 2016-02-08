@@ -5,6 +5,7 @@
 				<thead>
                 <!--<tr><td colspan="8" class="text-center"> <b>Income Table </b></td></tr>-->.
 				  <tr>
+                    <th>ID</th>
 					<th>Date</th>
 					<th>Income Type </th>
 					<th>Amount</th>					
@@ -13,11 +14,12 @@
 				</thead>
 				<tbody>
 				  <tr ng-repeat="i in inc.incomes">
+                    <td>{{i.id}}</td>
 					<td>{{i.idate}}</td>
 					<td>{{i.list_income}}</td>
 					<td>{{i.amount}}</td>
                     <td>
-                        <a ng-click="inc.UpdateRecord($index)">
+                        <a ng-click="inc.editIncome(i.id)">
                             <i class="glyphicon glyphicon-edit"></i>
                         </a>    
                         <a ng-click="inc.removeIncomeRecord($index)">
@@ -28,11 +30,21 @@
 				</tbody>
 			</table>
     <button ng-click="toggle1 = !toggle1" class="align-right btn btn-primary">{{toggleTexti}}</button>
-    <form class="form-horizontal ng-pristine ng-valid income-form hidden ng-valid" name="incomeForm"    role="form" ng-submit="inc.submitIncome(isValid)">
+    <form class="form-horizontal ng-pristine ng-valid income-form hidden ng-valid" name="incomeForm"    role="form" novalidate>
+        
+        <div class="form-group" ng-class="{'has-error':incomeForm.id.$invalid && !incomeForm.id.$pristine }">
+								<label class="col-md-2 control-label">Id</label>
+				<div class="col-md-4">
+        <input type="text" class="form-control ng-pristine ng-valid" name="id" ng-model="inc.new_income.id" required>
+      <span class="error-msg" ng-show="incomeForm.id.$touched && incomeForm.id.$invalid"> 
+    The Date is required.</span>
+				            </div>
+							</div>
+        
 							<div class="form-group" ng-class="{'has-error':incomeForm.idate.$invalid && !incomeForm.idate.$pristine }">
 								<label class="col-md-2 control-label">Date</label>
 				<div class="col-md-4">
-        <input type="text" class="form-control ng-pristine ng-valid" name="idate" ng-model="inc.idate" required>
+        <input type="text" class="form-control ng-pristine ng-valid" name="idate" ng-model="inc.new_income.idate" required>
       <span class="error-msg" ng-show="incomeForm.idate.$touched && incomeForm.idate.$invalid"> 
     The Date is required.</span>
 				            </div>
@@ -42,7 +54,7 @@
                             <label class="col-md-2 control-label"> Income Type </label> 
                             <div class="col-md-4">
 
-    <select id="sel" name="list_income" class="form-control" ng-model="inc.list_income" 
+    <select id="sel" name="list_income" class="form-control" ng-model="inc.new_income.list_income" 
             ng-options="obj.name as obj.name for obj in inc.list_incomes.data" required>
                                     <option value="" selected>Select</option>
                                 </select>
@@ -53,15 +65,25 @@
 							<div class="form-group" ng-class="{'has-error':incomeForm.amount.$invalid && !incomeForm.amount.$pristine}">
 								<label class="col-md-2 control-label"> Amount </label>
 								<div class="col-md-4">
-									<input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="inc.amount" required>
+									<input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="inc.new_income.amount" required>
     <span class="error-msg" ng-show="incomeForm.amount.$touched && incomeForm.amount.$invalid"> 
     Please fill the income amount.</span>
 								</div>
 							</div>
-                        
+                        <div class="form-group" ng-class="{'has-error':incomeForm.mode.$invalid && !incomeForm.mode.$pristine}">
+								<label class="col-md-2 control-label"> Mode </label>
+								<div class="col-md-4">
+									<input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="inc.new_income.mode" required>
+    <span class="error-msg" ng-show="incomeForm.mode.$touched && incomeForm.mode.$invalid"> 
+    Please fill the income amount.</span>
+								</div>
+							</div>
 							<div class="form-group">								
 								<div style="padding-left:110px">
-<input type="submit" value="Submit" ng-disabled="!incomeForm.$valid" class="btn btn-primary">
+<!--<input type="submit" value="Submit" ng-disabled="!incomeForm.$valid" class="btn btn-primary">-->
+                                       <input type="button" class="btn btn-primary" value="Save" ng-show="DisplaySave" ng-click="inc.saveIncome()" ng-disabled="!incomeForm.$valid"/>
+            
+                <input type="button" class="btn btn-primary" value="Update" ng-show="DisplayUpdate" ng-click="inc.UpdateIncome(inc.new_income.id)" ng-disabled="!incomeForm.$valid"/>
 								</div>
 							</div>
               </form>

@@ -1,18 +1,27 @@
 
  [
 {
+    "id": "1",
  	"idate": "01/01/2016",
  	"list_income": "Salary",
- 	"amount": "60000"
+ 	"amount": "60000",
+    "mode": "Cash"
+
  },
 {
+    "id": "2",
  	"idate": "02/01/2016",
  	"list_income": "Business",
- 	"amount": "20000"
+ 	"amount": "20000",
+    "mode": "Cheque"
+
  },
 {
+    "id": "3",
  	"idate": "03/01/2016",
  	"list_income": "Interest",
- 	"amount": "3000"
+ 	"amount": "3000",
+    "mode": "Cash"
+
  }
  ]

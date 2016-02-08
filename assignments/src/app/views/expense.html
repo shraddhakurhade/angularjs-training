@@ -5,6 +5,7 @@
               <table class="table expense table-bordered">
 				<thead>
 				  <tr>
+                    <th>ID</th>  
 					<th>Date</th>
 					<th>Expense Type </th>
 					<th>Amount</th>
@@ -15,6 +16,10 @@
 				</thead>
 				<tbody>
 				  <tr ng-repeat="e in view.expenses">
+                      <td>
+                        {{e.id}}
+                
+                    </td>
 					<td>
                         {{e.edate}}
                 
@@ -23,7 +28,7 @@
 					<td>{{e.amount}}</td>
 					<td>{{e.mode}}</td>
                     <td>
-					<a ng-click="view.editExpense()">
+					<a ng-click="view.editExpense(e.id)">
                         <i class="glyphicon glyphicon-edit"></i>
                     </a>    
                     <a ng-click="view.removeExpenseRecord($index)">
@@ -36,12 +41,22 @@
         <button ng-click="toggle = !toggle" class="align-right btn btn-primary">{{toggleText}}</button>
      
         <div class="expense-form hidden">
-            <form class="form-horizontal ng-pristine ng-valid" name="expenseForm" 
-                  ng-submit="view.submitExpenses(isValid)" novalidate>           
+            <form class="form-horizontal ng-pristine ng-valid" name="expenseForm" novalidate> 
+                 <!--ng-submit="view.submitExpenses(isValid)"-->                
+                <div class="form-group" ng-class="{'has-error':expenseForm.id.$invalid && !expenseForm.id.$pristine }">                
+				<label class="col-md-2 control-label">Id</label>
+				  <div class="col-md-4">
+				    <input type="text" class="form-control ng-pristine ng-valid" name="id" ng-model="view.new_expense.id" required>
+                      
+<span class="error-msg" ng-show="expenseForm.id.$touched && expenseForm.id.$invalid"> 
+    The Id is required.</span>
+								</div>
+							</div>
+                
                 <div class="form-group" ng-class="{'has-error':expenseForm.edate.$invalid && !expenseForm.edate.$pristine }">                
 				<label class="col-md-2 control-label">Date</label>
 				  <div class="col-md-4">
-				    <input type="text" class="form-control ng-pristine ng-valid" name="edate" ng-model="view.edate" required>
+				    <input type="text" class="form-control ng-pristine ng-valid" name="edate" ng-model="view.new_expense.edate" required>
                       
 <span class="error-msg" ng-show="expenseForm.edate.$touched && expenseForm.edate.$invalid"> 
     The Date is required.</span>
@@ -50,7 +65,7 @@
 							<div class="form-group" ng-class="{'has-error':expenseForm.list_expense.$invalid && !expenseForm.list_expense.$pristine }">			
                                 <label class="col-md-2 control-label">Expense Type </label> 
                             <div class="col-md-4">
-    <select id="sel" name="list_expense" class="form-control" ng-model="view.list_expense" 
+    <select id="sel" name="list_expense" class="form-control" ng-model="view.new_expense.list_expense" 
             ng-options="obj.name as obj.name for obj in view.list_expenses.data" required>
                                     <option value="" selected>Select</option>
                                 </select>
@@ -61,7 +76,7 @@
 							<div class="form-group" ng-class="{'has-error':expenseForm.amount.$invalid && !expenseForm.amount.$pristine }">
 				               <label class="col-md-2 control-label">Amount</label>
 								<div class="col-md-4">
-    <input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="view.amount" required> <span class="error-msg" ng-show="expenseForm.amount.$touched && expenseForm.amount.$invalid"> 
+    <input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="view.new_expense.amount" required> <span class="error-msg" ng-show="expenseForm.amount.$touched && expenseForm.amount.$invalid"> 
     Please fill the Expense Amount.</span>
 								</div>
                                    
@@ -69,7 +84,7 @@
                             <div class="form-group" ng-class="{'has-error':expenseForm.mode.$invalid && !expenseForm.mode.$pristine }">
 								<label class="col-md-2 control-label">Mode of Payment</label>
 								<div class="col-md-4">
-<input type="text" class="form-control ng-pristine ng-valid" name="mode" ng-model="view.mode" required>
+<input type="text" class="form-control ng-pristine ng-valid" name="mode" ng-model="view.new_expense.mode" required>
             <span class="error-msg" ng-show="expenseForm.mode.$touched && expenseForm.mode.$invalid"> 
     Mode of Payment field is required.</span>
 								</div>
@@ -78,7 +93,11 @@
                 
 							<div class="form-group">								
 								<div style="padding-left:110px">
-<input type="submit" value="Submit" ng-disabled="!expenseForm.$valid" class="btn btn-primary">
+<!--<input type="submit" value="Submit" ng-disabled="!expenseForm.$valid" class="btn btn-primary">-->
+            <input type="button" class="btn btn-primary" value="Save" ng-show="DisplaySave" ng-click="view.saveExpense()" ng-disabled="!expenseForm.$valid"/>
+            
+                <input type="button" class="btn btn-primary" value="Update" ng-show="DisplayUpdate" ng-click="view.UpdateExpense(view.new_expense.id)" ng-disabled="!expenseForm.$valid"/>
+                                 
 								</div>
 							</div>
               </form>

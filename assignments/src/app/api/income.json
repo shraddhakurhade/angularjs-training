@@ -1,0 +1,18 @@
+
+ [
+{
+ 	"idate": "01/01/2016",
+ 	"list_income": "Salary",
+ 	"amount": "60000"
+ },
+{
+ 	"idate": "02/01/2016",
+ 	"list_income": "Business",
+ 	"amount": "20000"
+ },
+{
+ 	"idate": "03/01/2016",
+ 	"list_income": "Interest",
+ 	"amount": "3000"
+ }
+ ]

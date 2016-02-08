@@ -1,0 +1,68 @@
+<div ng-controller="IncomeController as inc">
+            <p><b>Total Income:</b>{{inc.totalIncome()}}</p>
+
+              <table class="table income table-bordered">
+				<thead>
+                <!--<tr><td colspan="8" class="text-center"> <b>Income Table </b></td></tr>-->.
+				  <tr>
+					<th>Date</th>
+					<th>Income Type </th>
+					<th>Amount</th>					
+					<th></th>	
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr ng-repeat="i in inc.incomes">
+					<td>{{i.idate}}</td>
+					<td>{{i.list_income}}</td>
+					<td>{{i.amount}}</td>
+                    <td>
+                        <a ng-click="inc.UpdateRecord($index)">
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>    
+                        <a ng-click="inc.removeIncomeRecord($index)">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                    </tr>
+				</tbody>
+			</table>
+    <button ng-click="toggle1 = !toggle1" class="align-right btn btn-primary">{{toggleTexti}}</button>
+    <form class="form-horizontal ng-pristine ng-valid income-form hidden ng-valid" name="incomeForm"    role="form" ng-submit="inc.submitIncome(isValid)">
+							<div class="form-group" ng-class="{'has-error':incomeForm.idate.$invalid && !incomeForm.idate.$pristine }">
+								<label class="col-md-2 control-label">Date</label>
+				<div class="col-md-4">
+        <input type="text" class="form-control ng-pristine ng-valid" name="idate" ng-model="inc.idate" required>
+      <span class="error-msg" ng-show="incomeForm.idate.$touched && incomeForm.idate.$invalid"> 
+    The Date is required.</span>
+				            </div>
+							</div>
+						
+                            <div class="form-group" ng-class="{'has-error':incomeForm.list_income.$invalid && !incomeForm.list_income.$pristine}">				
+                            <label class="col-md-2 control-label"> Income Type </label> 
+                            <div class="col-md-4">
+
+    <select id="sel" name="list_income" class="form-control" ng-model="inc.list_income" 
+            ng-options="obj.name as obj.name for obj in inc.list_incomes.data" required>
+                                    <option value="" selected>Select</option>
+                                </select>
+            <span class="error-msg" ng-show="incomeForm.list_income.$touched && incomeForm.list_income.$invalid"> 
+    Please select the income Type.</span>
+                                </div>
+							</div>
+							<div class="form-group" ng-class="{'has-error':incomeForm.amount.$invalid && !incomeForm.amount.$pristine}">
+								<label class="col-md-2 control-label"> Amount </label>
+								<div class="col-md-4">
+									<input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="inc.amount" required>
+    <span class="error-msg" ng-show="incomeForm.amount.$touched && incomeForm.amount.$invalid"> 
+    Please fill the income amount.</span>
+								</div>
+							</div>
+                        
+							<div class="form-group">								
+								<div style="padding-left:110px">
+<input type="submit" value="Submit" ng-disabled="!incomeForm.$valid" class="btn btn-primary">
+								</div>
+							</div>
+              </form>
+    </div> 

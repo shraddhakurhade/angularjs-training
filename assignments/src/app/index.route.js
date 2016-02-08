@@ -7,11 +7,25 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
+     .state('dashboard', {
+        //abstract: true,
+        url: '/dashboard',
+        templateUrl: 'app/views/dashboard.html',
+        controller: 'DashboardController',
+        controllerAs: 'dash'
+      })
       .state('expense', {
-        url: '/',
-        templateUrl: 'app/partials/expense.html',
+        //parent: 'main',
+        url: '/expense',
+        templateUrl: 'app/views/expense.html',
         controller: 'ExpenseController',
-        controllerAs: 'e'
+        controllerAs: 'view'
+      })
+    .state('income', {
+        url: '/income',
+        templateUrl: 'app/views/income.html',
+        controller: 'IncomeController',
+        controllerAs: 'inc'
       });
 
     $urlRouterProvider.otherwise('/');

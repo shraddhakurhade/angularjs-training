@@ -1,0 +1,20 @@
+
+<div ng-controller="DashboardController as dash">
+    
+    <!--<h2> Expense Manager</h2>-->
+
+    <div class="row">
+        <div class="col-md-3"><h4><b>Total Expense:</b>{{dash.totalExpense()}} </h4></div>
+        <div class="col-md-3"><h4><b>Total Income:</b> {{dash.totalIncome()}}</h4></div>
+        <div class="col-md-3">
+            <h4><b>Total Balance:</b> 
+            {{dash.totalIncome()-dash.totalExpense()}}
+            </h4>    
+            </div>
+    </div>
+      <ul class="tab">
+      <li><a href="#expense"> Show Expense</a></li>
+      <li><a href="#income">Show Income</a></li>
+      </ul>
+ 
+</div>

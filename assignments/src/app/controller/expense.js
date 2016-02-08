@@ -1,102 +1,128 @@
-
- 'use strict';
-angular.module('expenseManager').
-controller('ExpenseController', function($scope) {
-       
-    $scope.expenseRecord = [
-{edate: '01/01/2016', rent: '6000', travel: '100', party: '4000', office: '200', studies: '200', shopping:'1000' }, 
-{edate: '02/01/2016', rent: '', travel: '100', party: '', office: '200', studies: '100', shopping:'' },
-{edate: '03/01/2016', rent: '', travel: '100', party: '', office: '200', studies: '100', shopping:'2000' }
-	];
+'use strict';
+angular.module('expenseManager').controller('ExpenseController', function($scope, expenseService) {
+     var vm = this;
+        vm.expenses = [];
+         $scope.expense = {};
+         $scope.index = 0; 
     
-$scope.incomeRecord = [{idate: '01/01/2016', business:'', salary: '50000',interest_deposit: ''},
-{idate: '02/01/2016', business:'', salary: '', interest_deposit: '10000'},
-{idate: '03/01/2016', business:'10000', salary: '', interest_deposit: '2000'},
-	];
-    
-	getRecordCount();
-	function getRecordCount() {
-		$scope.recordCount = $scope.expenseRecord.length;
-        console.log($scope.expenseRecord.length);
-	};
-	
-	function clearRecordPanel() {
-		$scope.nedate = '';
-		$scope.nrent = '';
-		$scope.ntravel = '';
-		$scope.nparty = '';
-		$scope.noffice = '';
-		$scope.nstudies = '';
-		$scope.nshopping = '';
-	};
+        vm.getExpenses = function() {
+            expenseService.getExpenses()
+                .then(function(expenses) {
+                    vm.expenses = expenses;
+                    console.log('expenses returned to controller.');
+                    //console.log(vm.expenses);
 
-	$scope.addExpenseRecord = function() {
-		if ($scope.nedate === '' || $scope.nrent === '' || $scope.ntravel === '' || $scope.nparty === ''|| $scope.noffice === ''|| $scope.nstudies === ''|| $scope.nshopping === '') return false;
-		
-		$scope.expenseRecord.push({
-			'edate': $scope.nedate, 
-			'rent': $scope.nrent,
-			'travel': $scope.ntravel,
-		    'party': $scope.nparty,
-			'office': $scope.noffice,
-			'studies': $scope.nstudies,
-		    'shopping': $scope.nshopping,	
-		});	
-		getRecordCount();
-		clearRecordPanel();	
-	};
-	
-	 $scope.removeRecord = function(idx) {
-		$scope.expenseRecord.splice(idx, 1);
+                },
+                function(data) {
+                    console.log('expenses retrieval failed.');
+                });
+        };        
+        vm.getExpenses();
+
+     vm.removeExpenseRecord = function(index) {
+		vm.expenses.splice(index, 1);
 		getRecordCount();
 	};
+      vm.list_expenses = {
+        data: [{
+            id: 'id1',
+            name: 'Rent'
+        }, {
+            id: 'id2',
+            name: 'Travel'
+        }, {
+            id: 'id3',
+            name: 'Party'
+        }, {
+            id: 'id4',
+            name: 'Studies'
+        }, {
+            id: 'id5',
+            name: 'Shopping'
+        }, {
+            id: 'id6',
+            name: 'Other'
+        }
+              ]
+    };       
+    //vm.list_expense = 'Travel';
+    
+  /*vm.editExpense = function() {
+    vm.editmode = true;
+    //vm.toggleText = vm.toggle ? 'Add Expense' : 'Close';
+    $('.expense-form').toggleClass('hidden');
+    //$('.expense-form').removeClass('hidden');
+
+    //vm.addExpense = false; 
+  };*/
+    
+    vm.submitExpenses = function(isValid){	
+        if (vm.edate === '' || vm.list_expense === '' || vm.amount === '' || vm.mode === '') return false;
+		vm.expenses.push({'edate':vm.edate, 'list_expense': vm.list_expense, 'amount':vm.amount, 'mode':vm.mode });
+		// Writing it to the server
+		//	
+            //vm.expenseForm.$setSubmitted();
+        getRecordCount();
+        clearRecordPanel();
+        vm.submitExpenses = true;
+        
+        if (isValid) {
+          alert('Expenses has been posted successfully!');
+        };
+		var dataObj = {
+				edate : vm.edate,
+				list_expense : vm.list_expense,
+				amount : vm.amount,
+                mode : vm.mode
+		};
+		var res = $http.post('/expense.json', dataObj);
+		res.success(function(data, status, headers, config) {
+			vm.message = data;
+		});
+		res.error(function(data, status, headers, config) {
+			alert( "failure message: " + JSON.stringify({data: data}));
+		});		
+		// Making the fields empty
+		vm.edate='';
+		vm.list_expense='';
+		vm.amount='';
+        vm.mode='';
 	
-     $scope.toggle = true;   
+	};
+ vm.totalExpense = function(){
+    var total = 0;
+    for(var i=0;i<vm.expenses.length;i++){
+    total = total + parseInt(vm.expenses[i].amount, 10);
+    }
+    return total;
+};
+    
+    
+   $scope.toggle = true;   
     $scope.$watch('toggle', function(){
         $scope.toggleText = $scope.toggle ? 'Add Expense' : 'Close';
         $('.expense-form').toggleClass('hidden');
         //$('.income-form').addClass('hidden');
-		clearRecordPanel();
+		//clearRecordPanel();
     });
-
+   /* vm.editExpense = function(index){
+			 vm.editing = vm.expenses.[index];	
+        vm.index = index;
+		};*/
     
-	getRecordCounti();
-	
-	function getRecordCounti() {
-		$scope.recordCount = $scope.incomeRecord.length;
-        console.log($scope.incomeRecord.length);
-	};
-	
-	function clearRecordPaneli() {
-		$scope.nidate = '';
-		$scope.nbusiness = '';
-		$scope.nsalary = '';
-		$scope.ninterest_deposit = '';		
-	};
+    
+    /*for (var i = 0, length = vm.expenses.length; i < length; i++) {
+      vm.expense[vm.expenses[i].id] = false;
+    }
 
-	$scope.addIncomeRecord = function() {
-		if ($scope.nidate === '' || $scope.nbusiness === '' || $scope.nsalary === '' ||  $scope.ninterest_deposit === '') return false;
-		
-		$scope.incomeRecord.push({
-			'idate': $scope.nidate, 
-			'business': $scope.nbusiness,
-			'salary': $scope.nsalary,
-		    'interest_deposit': $scope.ninterest_deposit
-		});	
-		getRecordCounti();
-		clearRecordPaneli();	
-	};
- $scope.removeIncomeRecord = function(idx) {
-		$scope.incomeRecord.splice(idx, 1);
-		getRecordCounti();
-	};
-   
-    $scope.toggle1 = true;   
-    $scope.$watch('toggle1', function(){
-        $scope.toggleTexti = $scope.toggle1 ? 'Add Income' : 'Close';
-        $('.income-form').toggleClass('hidden');
-		clearRecordPaneli();
+
+    vm.modify = function(tableData){
+        vm.expense[tableData.id] = true;
+    };
+
+
+    vm.update = function(tableData){
+        vm.expense[tableData.id] = false;
+    };*/
+    
     });
-
-       
-});

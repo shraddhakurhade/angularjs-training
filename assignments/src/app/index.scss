@@ -31,6 +31,23 @@ table tr:nth-child(even){ background-color: #ccc; }
 table th{ background-color: #555e65; color:#fff; }
 table tr:nth-child(even){ background-color: #ccc; }
 .glyphicon-trash { color: #555e65;}
+.tab {    padding-left: 0px;}
+.tab li {display: inline-block; list-style:none;
+ background-color: #337ab7;
+    border-color: #2e6da4;
+    padding:6px;
+    border-radius: 4px;
+}
+.tab li a{ text-decoration:none;
+    color: #fff;
+   
+}
+
+.form-group .error-msg, 
+.form-group.has-error input {
+  border-color: #B94A48;
+  color: #B94A48;
+}
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically

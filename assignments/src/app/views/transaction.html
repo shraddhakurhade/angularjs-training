@@ -1,0 +1,161 @@
+
+<div ng-controller="TransactionController as dash">
+    <div class="row">
+        <div class="col-md-3"><h4><b>Total Expense:</b>{{dash.totalExpense()}} </h4></div>
+        <div class="col-md-3"><h4><b>Total Income:</b> {{dash.totalIncome()}}</h4></div>
+        <div class="col-md-3">
+            <h4><b>Total Balance:</b> 
+            {{dash.totalIncome()-dash.totalExpense()}}
+            </h4>    
+            </div>
+    </div>
+    
+	<a ng-click="transFilter = {type:'Expense'}">Show Expense</a> |
+  <a ng-click="transFilter = {type: 'Income'}">Show Income</a> |
+<a ng-click="toggle = !toggle">{{toggleText}}</a> |	  
+	<a ng-click="transFilter = type">Show Report Table</a> 
+		
+              <table class="table filter transaction table-bordered">				  
+				<thead>
+				  <tr>
+                    <th>ID</th>  
+					<th>Date</th>
+					<th>Transaction Type </th>
+					<th>Category</th>
+					<th>Payer</th>
+  					<th>Payee</th>
+					<th>Amount</th>
+					<th>Mode of payment</th>
+					<th>Notes</th>
+					<th></th>	
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr ng-repeat="t in dash.transactions | filter:transFilter">
+	  
+					<td>{{t.transactionId}}</td>
+					<td> {{t.date | date: 'yyyy-MM-dd' }}</td>
+					<td>{{t.type}}</td>
+					<td> {{t.category}}</td> 
+					<td>{{t.payer}}</td>
+					<td>{{t.payee}}</td>
+					<td>{{t.amount}}</td>
+					<td>{{t.mode}}</td>  
+					<td>{{t.notes}}</td>
+                    <td>
+					<a ng-click="dash.editTransaction(t.transactionId)">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>    
+                    <a ng-click="dash.removeTransactionRecord($index)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>                               
+                      </td>
+                    </tr>
+				</tbody>
+			</table>
+       
+	
+            <form class="form-horizontal ng-pristine ng-valid transaction-form hidden" name="transactionForm" novalidate> 
+				
+				<h4> <b>Transaction Form Details</b> </h4>
+                <div class="form-group" ng-class="{'has-error':transactionForm.transactionId.$invalid && !transactionForm.transactionId.$pristine }">                
+				<label class="col-md-2 control-label">Id</label>
+				  <div class="col-md-4">
+				    <input type="text" class="form-control ng-pristine ng-valid" name="transactionId" ng-model="dash.new_transaction.transactionId" required>
+                      
+<span class="error-msg" ng-show="transactionForm.transactionId.$touched && transactionForm.transactionId.$invalid"> 
+    The Id is required.</span>
+								</div>
+							</div>
+                
+                <div class="form-group" ng-class="{'has-error':transactionForm.date.$invalid && !transactionForm.date.$pristine }">                
+				<label class="col-md-2 control-label">Date</label>
+				  <div class="col-md-4">
+				    <input type="date" class="form-control ng-pristine ng-valid" name="date" ng-model="dash.new_transaction.date" required>
+                      
+<span class="error-msg" ng-show="transactionForm.date.$touched && transactionForm.date.$invalid"> 
+    The Date is required.</span>
+								</div>
+							</div>
+							<div class="form-group" ng-class="{'has-error':transactionForm.type.$invalid && !transactionForm.type.$pristine }">			
+                                <label class="col-md-2 control-label">Transaction Type </label> 
+                            <div class="col-md-4">
+    <select id="sel" name="type" class="form-control" ng-model="dash.new_transaction.type" 
+            ng-options="obj.name as obj.name for obj in dash.type.data" required>
+                                    <option value="" selected>Select</option>
+                                </select>
+                                                                    <span class="error-msg" ng-show="transactionForm.type.$touched && transactionForm.type.$invalid"> 
+    Please select the Transaction Type.</span>
+                                </div>
+							</div>
+				
+							<div class="form-group" ng-class="{'has-error':transactionForm.category.$invalid && !transactionForm.category.$pristine }">			
+                                <label class="col-md-2 control-label"> Category </label> 
+                            <div class="col-md-4">
+    <select id="sel" name="category" class="form-control" ng-model="dash.new_transaction.category" 
+            ng-options="obj.name as obj.name for obj in dash.category.data" required>
+                                    <option value="" selected>Select</option>
+                                </select>
+                                                                    <span class="error-msg" ng-show="transactionForm.category.$touched && transactionForm.category.$invalid"> 
+    Please select the category.</span>
+                                </div>
+							</div>
+							<div class="form-group" ng-class="{'has-error':transactionForm.payer.$invalid && !transactionForm.payer.$pristine }">
+				               <label class="col-md-2 control-label">Payer</label>
+								<div class="col-md-4">
+    <input type="text" class="form-control ng-pristine ng-valid" name="payer" ng-model="dash.new_transaction.payer" required> <span class="error-msg" ng-show="transactionForm.payer.$touched && transactionForm.payer.$invalid"> 
+    Please select the payer.</span>
+								</div>
+                                   
+							</div>
+				
+							<div class="form-group" ng-class="{'has-error':transactionForm.payee.$invalid && !transactionForm.payee.$pristine }">
+				               <label class="col-md-2 control-label">Payee</label>
+								<div class="col-md-4">
+    <input type="text" class="form-control ng-pristine ng-valid" name="payee" ng-model="dash.new_transaction.payee" required> <span class="error-msg" ng-show="transactionForm.payee.$touched && transactionForm.payee.$invalid"> 
+    Please fill the Transaction payee.</span>
+								</div>
+                                   
+							</div>
+				
+							<div class="form-group" ng-class="{'has-error':transactionForm.amount.$invalid && !transactionForm.amount.$pristine }">
+				               <label class="col-md-2 control-label">Amount</label>
+								<div class="col-md-4">
+    <input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="dash.new_transaction.amount" required> <span class="error-msg" ng-show="transactionForm.amount.$touched && transactionForm.amount.$invalid"> 
+    Please fill the Transaction Amount.</span>
+								</div>
+                                   
+							</div>
+                            <div class="form-group" ng-class="{'has-error':transactionForm.mode.$invalid && !transactionForm.mode.$pristine }">
+								<label class="col-md-2 control-label">Mode of Payment</label>
+								<div class="col-md-4">
+<input type="text" class="form-control ng-pristine ng-valid" name="mode" ng-model="dash.new_transaction.mode" required>
+            <span class="error-msg" ng-show="transactionForm.mode.$touched && transactionForm.mode.$invalid"> 
+    Mode of Payment field is required.</span>
+								</div>
+           
+							</div>
+                
+					   <div class="form-group" ng-class="{'has-error':transactionForm.notes.$invalid && !transactionForm.notes.$pristine }">
+								<label class="col-md-2 control-label">Notes</label>
+								<div class="col-md-4">
+<input type="text" class="form-control ng-pristine ng-valid" name="notes" ng-model="dash.new_transaction.notes" required>
+            <span class="error-msg" ng-show="transactionForm.notes.$touched && transactionForm.notes.$invalid"> 
+    Please give the note.</span>
+								</div>
+           
+							</div>
+				
+							<div class="form-group">								
+								<div style="padding-left:110px">
+<!--<input type="submit" value="Submit" ng-disabled="!expenseForm.$valid" class="btn btn-primary">-->
+            <input type="button" class="btn btn-primary" value="Save" ng-show="DisplaySave" ng-click="dash.saveTransaction(Isvalid)" ng-disabled="!transactionForm.$valid"/>
+            
+                <input type="button" class="btn btn-primary" value="Update" ng-show="DisplayUpdate" ng-click="dash.UpdateTransaction(dash.new_transaction.transactionId)" ng-disabled="!transactionForm.$valid"/>
+                                 
+								</div>
+							</div>
+              </form>
+	
+	
+</div> 

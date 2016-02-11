@@ -43,8 +43,7 @@ angular.module('expenseManager').controller('ExpenseController', function($scope
         }, {
             id: 'id6',
             name: 'Other'
-        }
-              ]
+        }            ]
     };       
     //vm.list_expense = 'Travel';
  
@@ -92,17 +91,6 @@ angular.module('expenseManager').controller('ExpenseController', function($scope
 	};
         vm.saveExpense = function(){	
 
-      /*if (vm.new_expense.id == null) {
-                    vm.new_expense.id = eid++;
-                    vm.expenses.push(vm.new_expense);
-                } else {
- 
-                    for (i in vm.expenses) {
-                        if (vm.expenses[i].id == vm.new_expense.id) {
-                            vm.expenses[i] = vm.new_expense;
-                        }
-                    }
-                }*/
              if (vm.new_expense.id === '' || vm.new_expense.edate === '' || vm.new_expense.list_expense === '' || vm.new_expense.amount === '' || vm.new_expense.mode === '') return false;
             vm.expenses.push({'id':vm.new_expense.id,'edate':vm.new_expense.edate, 'list_expense': vm.new_expense.list_expense, 'amount':vm.new_expense.amount, 'mode':vm.new_expense.mode });
          clearRecordPanel();  

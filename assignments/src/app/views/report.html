@@ -1,5 +1,6 @@
+
 <div ng-controller="TransactionController as dash">
-           
+ 
 	<table class="table transaction table-bordered">				  
 				<thead>
 				  <tr>
@@ -16,7 +17,7 @@
 				  </tr>
 				</thead>
 				<tbody>
-				  <tr ng-repeat="t in dash.transactions | filter:{type:'Income'}">	  
+				  <tr ng-repeat="t in dash.transactions">	  
 					<td>{{t.transactionId}}</td>
 					<td> {{t.date}}</td>
 					<td>{{t.type}}</td>
@@ -37,4 +38,6 @@
                     </tr>
 				</tbody>
 			</table>
-</div> 
+   <div ui-view=""></div>
+
+</div>

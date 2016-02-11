@@ -23,7 +23,7 @@
                 });
             return def.promise;
         };
-
+          
          /*function addExpense() {
             var def = $q.defer();
 

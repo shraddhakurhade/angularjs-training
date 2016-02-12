@@ -22,6 +22,8 @@ angular.module('expenseManager').controller('TransactionController', function($s
         }; 
     
     vm.getTransactions();
+    
+  
     vm.totalExpense = function(){
     var total = 0;
 		
@@ -127,14 +129,18 @@ vm.transactions.push({'transactionId':vm.new_transaction.transactionId, 'date':v
                         vm.new_transaction.type=vm.transactions[i].type;
                         
                         
-                        $('.transaction-form').removeClass('hidden');
+                        //$('.transaction-form').removeClass('hidden');
 
                         //Hiding Save button
                         $scope.DisplaySave = false;
                         //Displaying Update button
                         $scope.DisplayUpdate = true;
-                      	$('.filter').toggleClass('hidden');
+                      	//$('.filter').toggleClass('hidden');
 						$scope.toggleText ='Close Transaction';
+                       $(".update").addClass("active");
+                       $(".cactive").removeClass("active");
+                       $("#newTransaction").addClass("in active");
+                       $(".cactivet").removeClass("in active");
 
                     }
                 }
@@ -159,13 +165,11 @@ vm.transactions.push({'transactionId':vm.new_transaction.transactionId, 'date':v
 
                    clearRecordPanel();
 		  			$scope.transactionForm.$setPristine();
-		$scope.transactionForm.$setUntouched();
+		            $scope.transactionForm.$setUntouched();
                     $scope.DisplaySave = true;
                     $scope.DisplayUpdate = false;
-		  		$('.transaction-form').toggleClass('hidden');
-		  		            $('.filter').toggleClass('hidden');
-
-
+		  		//$('.transaction-form').toggleClass('hidden');
+		  		            //$('.filter').toggleClass('hidden');
 		  
 	   };
 

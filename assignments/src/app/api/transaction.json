@@ -12,23 +12,56 @@
  },
 {
     "transactionId":"2",
- 	"date": "24-02-2016",
+ 	"date": "21-02-2016",
  	"payer": "HDFC Bank",
     "payee": "Shraddha Kurhade",
     "category": "Interest",
     "type": "Income",
  	"amount": "30000",
  	"mode": "Electronic Transfer",
-    "notes":"Deposite Interest retrival"
+    "notes":"Deposite Interest"
  },
+ {
+    "transactionId":"2",
+ 	"date": "01-02-2016",
+ 	"payer": "Globant",
+    "payee": "Shraddha Kurhade",
+    "category": "Salary",
+    "type": "Income",
+ 	"amount": "50000",
+ 	"mode": "Electronic Transfer",
+    "notes":"Salary for Jan"
+ },    
 {
     "transactionId":"3",
- 	"date": "20-03-2016",
+ 	"date": "24-02-2016",
+ 	"payer": "LIC",
+    "payee": "Shraddha Kurhade",
+    "category": "Interest",
+    "type": "Income",
+ 	"amount": "40000",
+ 	"mode": "Electronic Transfer",
+    "notes":"Policy"
+ },
+{
+    "transactionId":"4",
+ 	"date": "22-03-2016",
  	"payer": "Shraddha Kurhade",
     "payee": "Amazon",
     "category": "Shopping",
     "type": "Expense",
- 	"amount": "8000",
+ 	"amount": "7000",
+ 	"mode": "Cash",
+    "notes":"Shopping"
+ },
+     {
+    "transactionId":"5",
+ 	"date": "24-03-2016",
+ 	"payer": "Shraddha Kurhade",
+    "payee": "Flipkart",
+    "category": "Shopping",
+    "type": "Expense",
+ 	"amount": "5000",
  	"mode": "Cash",
     "notes":"Shopping"
  }

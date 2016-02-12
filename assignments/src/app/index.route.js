@@ -7,28 +7,28 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-     .state('transaction', {
+    .state('transaction', {
         url: '/transaction',
         templateUrl: 'app/views/transaction.html',
         controller: 'TransactionController',
         controllerAs: 'dash'
       }); 
-     /* .state('transaction.expense', {
-        parent: 'transaction',
+      /*.state('dashboard.expense', {
+        parent: 'dashboard',
         url: '/expense',
         templateUrl: 'app/views/expense.html',
         controller: 'TransactionController',
         controllerAs: 'dash'
       })
-    .state('transaction.income', {
-		parent: 'transaction',
+    .state('dashboard.income', {
+		parent: 'dashboard',
         url: '/income',
         templateUrl: 'app/views/income.html',
-        controller: 'TransactionController',
+        controller: 'ExpenseController',
         controllerAs: 'dash'
       })
-	  .state('transaction.report', {
-        parent: 'transaction',
+	  .state('dashboard.report', {
+        parent: 'dashboard',
         url: '/report',
         templateUrl: 'app/views/report.html',
         controller: 'TransactionController',

@@ -9,13 +9,17 @@
             </h4>    
             </div>
     </div>
-    
-	<a ng-click="transFilter = {type:'Expense'}">Show Expense</a> |
-  <a ng-click="transFilter = {type: 'Income'}">Show Income</a> |
-<a ng-click="toggle = !toggle">{{toggleText}}</a> |	  
-	<a ng-click="transFilter = type">Show Report Table</a> 
-		
-              <table class="table filter transaction table-bordered">				  
+    <ul class="nav nav-tabs">
+      <li class="active cactive"><a data-toggle="tab" href="#Expense">Expense</a></li>
+      <li class="cactive"><a data-toggle="tab" href="#Income">Income</a></li>
+      <li class="update"><a data-toggle="tab" href="#newTransaction">New Transaction</a></li>
+      <li class="cactive"><a data-toggle="tab" href="#Report">Report</a></li>
+    </ul>
+
+<div class="tab-content">
+  <div id="Expense" class="tab-pane fade in active cactivet">
+    <h4>Expense details</h4>
+    <table class="table filter transaction table-bordered">				  
 				<thead>
 				  <tr>
                     <th>ID</th>  
@@ -31,7 +35,48 @@
 				  </tr>
 				</thead>
 				<tbody>
-				  <tr ng-repeat="t in dash.transactions | filter:transFilter">
+				  <tr ng-repeat="t in dash.transactions | filter: {type:'Expense'} | orderBy:'amount'">
+	  
+					<td>{{t.transactionId}}</td>
+					<td> {{t.date | date: 'yyyy-MM-dd' }}</td>
+					<td>{{t.type}}</td>
+					<td> {{t.category}}</td> 
+					<td>{{t.payer}}</td>
+					<td>{{t.payee}}</td>
+					<td>{{t.amount}}</td>
+					<td>{{t.mode}}</td>  
+					<td>{{t.notes}}</td>
+                    <td>
+					<a class="updateForm" ng-click="dash.editTransaction(t.transactionId)">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>    
+                    <a ng-click="dash.removeTransactionRecord($index)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>                               
+                      </td>
+                    </tr>
+				</tbody>
+			</table>
+    </div>
+  <div id="Income" class="tab-pane fade cactivet">
+    <h4>Income details</h4>
+    <table class="table filter transaction table-bordered">				  
+				<thead>
+				  <tr>
+                    <th>ID</th>  
+					<th>Date</th>
+					<th>Transaction Type </th>
+					<th>Category</th>
+					<th>Payer</th>
+  					<th>Payee</th>
+					<th>Amount</th>
+					<th>Mode of payment</th>
+					<th>Notes</th>
+					<th></th>	
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr ng-repeat="t in dash.transactions | filter:{type: 'Income'} | orderBy:'amount'">
 	  
 					<td>{{t.transactionId}}</td>
 					<td> {{t.date | date: 'yyyy-MM-dd' }}</td>
@@ -52,12 +97,12 @@
                       </td>
                     </tr>
 				</tbody>
-			</table>
-       
-	
-            <form class="form-horizontal ng-pristine ng-valid transaction-form hidden" name="transactionForm" novalidate> 
+			</table>  </div>
+      <div id="newTransaction" class="tab-pane fade">
+
+      <form class="form-horizontal ng-pristine ng-valid transaction-form" name="transactionForm" novalidate> 
 				
-				<h4> <b>Transaction Form Details</b> </h4>
+				<h4 class="col-md-offset-3"> <b>Transaction Form </b> </h4>
                 <div class="form-group" ng-class="{'has-error':transactionForm.transactionId.$invalid && !transactionForm.transactionId.$pristine }">                
 				<label class="col-md-2 control-label">Id</label>
 				  <div class="col-md-4">
@@ -139,7 +184,7 @@
 					   <div class="form-group" ng-class="{'has-error':transactionForm.notes.$invalid && !transactionForm.notes.$pristine }">
 								<label class="col-md-2 control-label">Notes</label>
 								<div class="col-md-4">
-<input type="text" class="form-control ng-pristine ng-valid" name="notes" ng-model="dash.new_transaction.notes" required>
+<input type="text" maxlength="20" class="form-control ng-pristine ng-valid" name="notes" ng-model="dash.new_transaction.notes" required>
             <span class="error-msg" ng-show="transactionForm.notes.$touched && transactionForm.notes.$invalid"> 
     Please give the note.</span>
 								</div>
@@ -148,14 +193,73 @@
 				
 							<div class="form-group">								
 								<div style="padding-left:110px">
-<!--<input type="submit" value="Submit" ng-disabled="!expenseForm.$valid" class="btn btn-primary">-->
-            <input type="button" class="btn btn-primary" value="Save" ng-show="DisplaySave" ng-click="dash.saveTransaction(Isvalid)" ng-disabled="!transactionForm.$valid"/>
-            
+            <input type="button" class="btn btn-primary" value="Save" ng-show="DisplaySave" 
+                   ng-click="dash.saveTransaction(Isvalid)" ng-disabled="!transactionForm.$valid"/>
                 <input type="button" class="btn btn-primary" value="Update" ng-show="DisplayUpdate" ng-click="dash.UpdateTransaction(dash.new_transaction.transactionId)" ng-disabled="!transactionForm.$valid"/>
                                  
 								</div>
 							</div>
               </form>
-	
-	
+    </div>
+    
+  <div id="Report" class="tab-pane fade cactivet">      
+            <div class="col-md-3 col-md-offset-9 form-inline" style="padding: 0px;">
+                <p></p>   
+                <label for="email">Sort By Category</label>
+                    <select id="sel" name="searchBycategory" class="form-control" 
+                            ng-model="dash.searchBycategory">
+                                                <option value="" selected>Select All</option>
+                                                <option value="Shopping"> Shopping </option>
+                                                <option value="Interest"> Interest </option>
+                                                <option value="Salary"> Salary </option>
+                                                <option value="Rent"> Rent </option>
+                                                <option value="Other"> Travel </option>
+                                                <option value="Business"> Party </option>
+                                                <option value="Rent"> Studies </option>
+                                                <option value="Other"> Business </option>
+                                                <option value="Business"> Other </option>
+                    </select>
+                <p></p>   
+            </div>
+              <table class="table filter transaction table-bordered">				  
+				<thead>
+				  <tr>
+                    <th>ID</th>  
+					<th>Date</th>
+					<th>Transaction Type </th>
+					<th>Category</th>
+					<th>Payer</th>
+  					<th>Payee</th>
+					<th>Amount</th>
+					<th>Mode of payment</th>
+					<th>Notes</th>
+					<th></th>	
+				  </tr>
+				</thead>
+				<tbody>
+<tr ng-repeat="t in dash.transactions | filter:dash.searchBycategory | orderBy:'amount'">
+					<td>{{t.transactionId}}</td>
+					<td> {{t.date | date: 'yyyy-MM-dd' }}</td>
+					<td>{{t.type}}</td>
+					<td> {{t.category}}</td> 
+					<td>{{t.payer}}</td>
+					<td>{{t.payee}}</td>
+					<td>{{t.amount}}</td>
+					<td>{{t.mode}}</td>  
+					<td>{{t.notes}}</td>
+                    <td>
+					<a ng-click="dash.editTransaction(t.transactionId)">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>    
+                    <a ng-click="dash.removeTransactionRecord($index)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>                               
+                      </td>
+                    </tr>
+				</tbody>
+			</table>
+       
+  </div>
+</div><!--/tab navigation-->
+
 </div> 

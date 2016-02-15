@@ -1,4 +1,3 @@
-
 <div ng-controller="TransactionController as dash">
     <div class="row">
         <div class="col-md-3"><h4><b>Total Expense:</b>{{dash.totalExpense()}} </h4></div>
@@ -7,7 +6,7 @@
             <h4><b>Total Balance:</b> 
             {{dash.totalIncome()-dash.totalExpense()}}
             </h4>    
-            </div>
+        </div>
     </div>
     <ul class="nav nav-tabs">
       <li class="active cactive"><a data-toggle="tab" href="#Expense">Expense</a></li>
@@ -36,7 +35,6 @@
 				</thead>
 				<tbody>
 				  <tr ng-repeat="t in dash.transactions | filter: {type:'Expense'} | orderBy:'amount'">
-	  
 					<td>{{t.transactionId}}</td>
 					<td> {{t.date | date: 'yyyy-MM-dd' }}</td>
 					<td>{{t.type}}</td>
@@ -53,11 +51,11 @@
                     <a ng-click="dash.removeTransactionRecord($index)">
                         <i class="glyphicon glyphicon-trash"></i>
                     </a>                               
-                      </td>
-                    </tr>
+                    </td>
+                 </tr>
 				</tbody>
 			</table>
-    </div>
+    </div><!-- /expense -->
   <div id="Income" class="tab-pane fade cactivet">
     <h4>Income details</h4>
     <table class="table filter transaction table-bordered">				  
@@ -106,7 +104,7 @@
                 <div class="form-group" ng-class="{'has-error':transactionForm.transactionId.$invalid && !transactionForm.transactionId.$pristine }">                
 				<label class="col-md-2 control-label">Id</label>
 				  <div class="col-md-4">
-				    <input type="text" class="form-control ng-pristine ng-valid" name="transactionId" ng-model="dash.new_transaction.transactionId" required>
+				    <input type="text" class="form-control ng-pristine ng-valid" name="transactionId" ng-model="dash.new_transaction.transactionId" min="7" max="99" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required>
                       
 <span class="error-msg" ng-show="transactionForm.transactionId.$touched && transactionForm.transactionId.$invalid"> 
     The Id is required.</span>
@@ -166,7 +164,7 @@
 							<div class="form-group" ng-class="{'has-error':transactionForm.amount.$invalid && !transactionForm.amount.$pristine }">
 				               <label class="col-md-2 control-label">Amount</label>
 								<div class="col-md-4">
-    <input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="dash.new_transaction.amount" required> <span class="error-msg" ng-show="transactionForm.amount.$touched && transactionForm.amount.$invalid"> 
+    <input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="dash.new_transaction.amount" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required> <span class="error-msg" ng-show="transactionForm.amount.$touched && transactionForm.amount.$invalid"> 
     Please fill the Transaction Amount.</span>
 								</div>
                                    

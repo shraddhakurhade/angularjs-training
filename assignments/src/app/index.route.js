@@ -7,20 +7,19 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-    .state('transaction', {
+   /* .state('transaction', {
         url: '/transaction',
         templateUrl: 'app/views/transaction.html',
         controller: 'TransactionController',
         controllerAs: 'dash'
-      }); 
-      /*.state('dashboard.expense', {
-        parent: 'dashboard',
-        url: '/expense',
-        templateUrl: 'app/views/expense.html',
-        controller: 'TransactionController',
+      }); */
+    .state('dashboard', {
+        url: '/dashboard',
+        templateUrl: 'app/views/dashboard.html',
+        controller: 'DashboardController',
         controllerAs: 'dash'
-      })
-    .state('dashboard.income', {
+      });
+    /*.state('dashboard.income', {
 		parent: 'dashboard',
         url: '/income',
         templateUrl: 'app/views/income.html',
@@ -34,7 +33,8 @@
         controller: 'TransactionController',
         controllerAs: 'dash'
       });*/
-	  $urlRouterProvider.otherwise('/transaction');
+     //$urlRouterProvider.otherwise('/transaction');
+     $urlRouterProvider.otherwise('/dashboard');
 
   }   
 })();

@@ -41,11 +41,7 @@ angular.module('expenseManager').controller('DashboardController', function($sco
     }
     return total;
    };
-      $scope.removeTransactionRecord = function(index) {
-		$scope.transactions.splice(index, 1);
-		getRecordCount();
-	};
-		
+     
    function clearRecordPanel() {
 		$scope.new_transaction.transactionId = '';
 		$scope.new_transaction.date = '';

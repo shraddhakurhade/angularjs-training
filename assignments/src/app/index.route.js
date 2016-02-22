@@ -7,12 +7,6 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-   /* .state('transaction', {
-        url: '/transaction',
-        templateUrl: 'app/views/transaction.html',
-        controller: 'TransactionController',
-        controllerAs: 'dash'
-      }); */
     .state('dashboard', {
         url: '/dashboard',
         templateUrl: 'app/views/dashboard.html',

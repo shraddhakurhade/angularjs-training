@@ -1,10 +1,9 @@
 'use strict';
 angular.module('expenseManager').controller('DashboardController', function($scope,expenseManagerService) {
-	$scope.index =0;
-    
+	
         $scope.transactions = [];
         $scope.new_transaction = {};
-	    $scope.date = new Date(19, 3, 2015);
+	    $scope.date = new Date();
      
         $scope.getTransactions = function() {
             expenseManagerService.getTransactions()
@@ -21,7 +20,6 @@ angular.module('expenseManager').controller('DashboardController', function($sco
     
     $scope.getTransactions();
     
-  
    $scope.totalExpense = function(){
     var total = 0;
 		
@@ -99,7 +97,6 @@ angular.module('expenseManager').controller('DashboardController', function($sco
                         $scope.DisplaySave = false;
                         //Displaying Update button
                         $scope.DisplayUpdate = true;
-                      	//$('.filter').toggleClass('hidden');
                        $(".update").addClass("active");
                        $(".cactive").removeClass("active");
                        $("#newTransaction").addClass("in active");
@@ -126,17 +123,6 @@ angular.module('expenseManager').controller('DashboardController', function($sco
                     $scope.DisplayUpdate = false;
 	   };
 
-	   $scope.toggle = true;   
-		$scope.$watch('toggle', function(){
-			$scope.toggleText = $scope.toggle ? 'New Transaction' : 'Close Transaction';
-			$('.transaction-form').toggleClass('hidden');
-			 $scope.DisplaySave = true;
-				$('.filter').toggleClass('hidden');
-				   //Displaying Update button
-			$scope.DisplayUpdate = false;
-			clearRecordPanel();
-		});
-	
 	 $scope.type = {
         data: [{
             id: 'id1',

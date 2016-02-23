@@ -1,0 +1,110 @@
+
+<div ng-controller="RecurringController as recur">
+ 
+				  <!--<input type="button" ng-click="openForm()" id="add-recurring" class="align-right btn btn-primary" value="Add Recurring"></input>-->
+
+
+	 <form class="form-horizontal ng-pristine ng-valid Recurring-form" name="recurringForm" novalidate> 
+				
+				<h4 class="col-md-offset-3"> <b>Recurring Form </b> </h4>
+  				 <!--<div class="form-group" ng-class="{'has-error':recurringForm.recurringId.$invalid && !recurringForm.recurringId.$pristine }">                
+				<label class="col-md-2 control-label">Id</label>
+				  <div class="col-md-4">
+				    <input type="text" class="form-control ng-pristine ng-valid" name="recurringId" ng-model="new_recurring.recurringId">
+                      
+<span class="error-msg" ng-show="recurringForm.date.$touched && recurringForm.date.$invalid"> 
+    The Date is required.</span>
+								</div>
+					</div>-->
+                <div class="form-group" ng-class="{'has-error':recurringForm.date.$invalid && !recurringForm.date.$pristine }">                
+				<label class="col-md-2 control-label">Date</label>
+				  <div class="col-md-4">
+				    <input type="date" class="form-control ng-pristine ng-valid" name="date" ng-model="new_recurring.date" required>
+                      
+<span class="error-msg" ng-show="recurringForm.date.$touched && recurringForm.date.$invalid"> 
+    The Date is required.</span>
+								</div>
+							</div>
+							<div class="form-group" ng-class="{'has-error':recurringForm.type.$invalid && !recurringForm.type.$pristine }">			
+                                <label class="col-md-2 control-label">Recurring Type </label> 
+                            <div class="col-md-4">
+    <select id="sel" name="type" class="form-control" ng-model="new_recurring.type" 
+            ng-options="obj.name as obj.name for obj in type.data" required>
+                                    <option value="" selected>Select</option>
+                                </select>
+                                                                    <span class="error-msg" ng-show="recurringForm.type.$touched && recurringForm.type.$invalid"> 
+    Please select the Recurring Type.</span>
+                                </div>
+							</div>
+				
+							<div class="form-group" ng-class="{'has-error':recurringForm.category.$invalid && !recurringForm.category.$pristine }">			
+                                <label class="col-md-2 control-label"> Category </label> 
+                            <div class="col-md-4">
+    <select id="sel" name="category" class="form-control" ng-model="new_recurring.category" 
+            ng-options="obj.name as obj.name for obj in category.data" required>
+                                    <option value="" selected>Select</option>
+                                </select>
+                                                                    <span class="error-msg" ng-show="recurringForm.category.$touched && recurringForm.category.$invalid"> 
+    Please select the category.</span>
+                                </div>
+							</div>
+							<div class="form-group" ng-class="{'has-error':recurringForm.payer.$invalid && !recurringForm.payer.$pristine }">
+				               <label class="col-md-2 control-label">Payer</label>
+								<div class="col-md-4">
+    <input type="text" class="form-control ng-pristine ng-valid" name="payer" ng-model="new_recurring.payer" required> <span class="error-msg" ng-show="recurringForm.payer.$touched && recurringForm.payer.$invalid"> 
+    Please select the payer.</span>
+								</div>
+                                   
+							</div>
+				
+							<div class="form-group" ng-class="{'has-error':recurringForm.payee.$invalid && !recurringForm.payee.$pristine }">
+				               <label class="col-md-2 control-label">Payee</label>
+								<div class="col-md-4">
+    <input type="text" class="form-control ng-pristine ng-valid" name="payee" ng-model="new_recurring.payee" required> <span class="error-msg" ng-show="recurringForm.payee.$touched && recurringForm.payee.$invalid"> 
+    Please fill the Recurring payee.</span>
+								</div>
+                                   
+							</div>
+				
+							<div class="form-group" ng-class="{'has-error':recurringForm.amount.$invalid && !recurringForm.amount.$pristine }">
+				               <label class="col-md-2 control-label">Amount</label>
+								<div class="col-md-4">
+    <input type="text" class="form-control ng-pristine ng-valid" name="amount" ng-model="new_recurring.amount" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required> <span class="error-msg" ng-show="recurringForm.amount.$touched && recurringForm.amount.$invalid"> 
+    Please fill the Recurring Amount.</span>
+								</div>
+                                   
+							</div>
+                            <div class="form-group" ng-class="{'has-error':recurringForm.mode.$invalid && !recurringForm.mode.$pristine }">
+								<label class="col-md-2 control-label">Mode of Payment</label>
+								<div class="col-md-4">
+								<select id="sel" name="mode" class="form-control" ng-model="new_recurring.mode" 
+            ng-options="obj.name as obj.name for obj in mode.data" required>
+                                    <option value="" selected>Select</option>
+                                </select>	
+            <span class="error-msg" ng-show="recurringForm.mode.$touched && recurringForm.mode.$invalid"> 
+    Mode of Payment field is required.</span>
+								</div>
+           
+							</div>
+                
+					   <div class="form-group" ng-class="{'has-error':recurringForm.notes.$invalid && !recurringForm.notes.$pristine }">
+								<label class="col-md-2 control-label">Notes</label>
+								<div class="col-md-4">
+<input type="text" maxlength="20" class="form-control ng-pristine ng-valid" name="notes" ng-model="new_recurring.notes">
+            <span class="error-msg" ng-show="recurringForm.notes.$touched && recurringForm.notes.$invalid"> 
+    Please give the note.</span>
+								</div>
+           
+							</div>
+				
+							<div class="form-group">								
+								<div style="padding-left:110px">
+            <input type="button" class="btn btn-primary" value="Save" ng-show="DisplaySave" 
+                   ng-click="saveRecurring()" ng-disabled="!recurringForm.$valid"/>
+                <input type="button" class="btn btn-primary" value="Update" ng-show="DisplayUpdate" ng-click="UpdateRecurring(new_recurring.recurringId)" ng-disabled="!recurringForm.$valid"/>
+                                 
+								</div>
+							</div>
+              </form>
+
+</div>

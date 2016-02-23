@@ -1,0 +1,27 @@
+<div class="panel panel-primary">
+      <div class="panel-heading">Notifications </div>
+      <div class="panel-body">
+		  <ul class="notifications col-sm-12" role="menu" aria-labelledby="dLabel">
+  
+    <li class="divider"></li>
+   <div class="notifications-wrapper">
+     <div class="content" ng-repeat="r in data">
+      
+       <div class="notification-item">
+        <h4 class="item-title"> Upcoming <b>{{r.type}} </b> on {{r.date | date: 'MMM d, y' }} </h4>
+        <p class="item-info"> {{r.category}} {{r.amount}}</p>
+      </div>
+       
+    </div>
+
+	   
+   </div>
+   
+  </ul>
+	</div>
+    </div>
+
+
+
+					
+          

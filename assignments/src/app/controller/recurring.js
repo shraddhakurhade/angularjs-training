@@ -19,7 +19,7 @@ angular.module('expenseManager').controller('RecurringController', function($sco
         }; 
     $scope.intervalPromise = $interval(function(){
     $scope.getRecurrings();
-    }, 1000); 
+    }, 10000); 
 	
     $scope.getRecurrings();
 

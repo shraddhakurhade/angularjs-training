@@ -1,5 +1,5 @@
 'use strict';
-angular.module('expenseManager').controller('DashboardController', function($scope,expenseManagerService) {
+angular.module('expenseManager').controller('DashboardController', function($scope,expenseManagerService,$interval) {
 	
         $scope.transactions = [];
         $scope.new_transaction = {};
@@ -17,7 +17,9 @@ angular.module('expenseManager').controller('DashboardController', function($sco
                     console.log('transaction retrieval failed.');
                 });
         }; 
-    
+      $scope.intervalPromise = $interval(function(){
+    $scope.getTransactions();
+    }, 10000); 
     $scope.getTransactions();
     
    $scope.totalExpense = function(){

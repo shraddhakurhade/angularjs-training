@@ -5,7 +5,7 @@
   
     <li class="divider"></li>
    <div class="notifications-wrapper">
-     <div class="content" ng-repeat="r in data">
+     <div class="content" ng-repeat="r in data  | orderBy:'date'">
       
        <div class="notification-item">
         <h4 class="item-title"> Upcoming <b>{{r.type}} </b> on {{r.date | date: 'MMM d, y' }} </h4>

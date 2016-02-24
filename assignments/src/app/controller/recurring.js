@@ -1,5 +1,5 @@
 'use strict';
-angular.module('expenseManager').controller('RecurringController', function($scope,recurringservice,$filter) {
+angular.module('expenseManager').controller('RecurringController', function($scope,recurringservice,$filter,$interval) {
     
      	 $scope.recurrings = [];
         $scope.new_recurring = {};
@@ -17,7 +17,10 @@ angular.module('expenseManager').controller('RecurringController', function($sco
                     console.log('Recurrings retrieval failed.');
                 });
         }; 
-    
+    $scope.intervalPromise = $interval(function(){
+    $scope.getRecurrings();
+    }, 10000); 
+	
     $scope.getRecurrings();
 
      $scope.removeRecurringRecord = function(index) {

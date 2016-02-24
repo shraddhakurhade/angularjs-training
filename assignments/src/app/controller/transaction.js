@@ -19,7 +19,7 @@ angular.module('expenseManager').controller('DashboardController', function($sco
         }; 
       $scope.intervalPromise = $interval(function(){
     $scope.getTransactions();
-    }, 10000); 
+    }, 1000); 
     $scope.getTransactions();
     
    $scope.totalExpense = function(){
